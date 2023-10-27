@@ -1,4 +1,13 @@
 
+
+leaf_area_data = read.csv('../Fortran/02_description_of_ecosystems/leaf_area/leaf_area_density.csv')
+
+plot(leaf_area_data$LAD3, leaf_area_data$Height,  type = 'l', col = 'blue', xlab = 'Leaf area density (m^2 m^{-3})',
+     ylab = 'Height (z/h_c)', main = 'Profiles')
+lines(leaf_area_data$LAD2, leaf_area_data$Height, col = 'red')
+lines(leaf_area_data$LAD1, leaf_area_data$Height, col = 'green')
+
+
 # % Supplemental program 2.1
 # 
 # % ----------------------------------------------
@@ -12,7 +21,7 @@ q <- c(2.5, 2.0, 3.5)
 
 # Canopy parameters
 LAI <- 5
-hc <- 20
+hc <- 10
 cat("Leaf area index =", LAI, "\n")
 
 # Create a vector of heights (z) with linearly spaced values
@@ -56,9 +65,7 @@ for (i in 1:length(p)) {
 # Make a graph for leaf area density in relation to relative height (z/hc)
 z_rel <- z / hc
 
-plot(y1, z_rel, type = 'l', col = 'blue', xlab = 'Leaf area density (m^2 m^{-3})',
+plot(y3, z_rel, type = 'l', col = 'blue', xlab = 'Leaf area density (m^2 m^{-3})',
      ylab = 'Height (z/h_c)', main = 'Profiles')
 lines(y2, z_rel, col = 'red')
-lines(y3, z_rel, col = 'green')
-legend('southeast', legend = c('p,q = 2.5,2.5', 'p,q = 3.5,2.0', 'p,q = 11.5,3.5'),
-       col = c('blue', 'red', 'green'), lty = 1)
+lines(y1, z_rel, col = 'green')

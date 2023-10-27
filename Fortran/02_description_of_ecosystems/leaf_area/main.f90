@@ -39,13 +39,13 @@ program main
     ! =============================================================================================
     ! Calculate the number of heights and allocate memory
     ! =============================================================================================
-    allocate(z(1:INT((z_max-z_min)/dz)))
+    allocate(z(INT((z_max-z_min)/dz)))
     allocate(y1(size(z)), y2(size(z)), y3(size(z)))
 
     ! =============================================================================================
     ! Create a vector of heights
     ! =============================================================================================
-    do j=1,size(z)
+    do j=0,size(z)
         z(j) = z_min + dz * j
     end do
 
@@ -60,9 +60,10 @@ program main
     ! =============================================================================================
     do i = 1, size(p)
         sum = 0.0
-        do j = 1, size(z)
+        do j = 0, size(z)
             x = z(j)/hc ! x: scaled height from 0 to 1;
-            lad = (LAI / hc) * (x**(p(i) - 1) * (1 - x)**(q(i) - 1)) / beta(p(i), q(i))
+            lad = (LAI / hc) * (x**(p(i) - 1.) * (1. - x)**(q(i) - 1.)) / beta(p(i), q(i))
+            ! write(*,*) j,x,lad,size(z)
             ! Numerically sum leaf area for each height
             sum = sum + lad * dz
 
@@ -78,14 +79,13 @@ program main
 
         write(*, '(A,F6.2,F6.2)') "p, q = ", p(i), q(i)
         write(*, '(A,F8.4)') "Leaf area index (numerical) = ", sum
-
-        ! Write the results to the CSV file
-        do j = 0, SIZE(z)
-            write(10, '(4F8.4)') z(j), y1(j), y2(j), y3(j)
-        end do
-        
     end do
-
+    
+    ! Write the results to the CSV file
+    do j = 0, SIZE(z)
+        write(10, '(3(F8.4,","),(F8.4))') z(j), y1(j), y2(j), y3(j)
+    end do
+    
     ! Close the CSV file
     close(10)
 

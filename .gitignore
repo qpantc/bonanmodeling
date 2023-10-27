@@ -3,3 +3,6 @@ R/.Rhistory
 R/.RData
 R/.Ruserdata
 .Rproj.user
+
+*.o
+*.mod
